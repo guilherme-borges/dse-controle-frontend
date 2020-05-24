@@ -31,7 +31,6 @@ export default function SignIn() {
 
         <div className="signin-container">
             <form className="form-signin" onSubmit={handleSignIn}>
-                <img className="mb-4" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
                 <h1 className="h3 mb-3 font-weight-normal">Por favor faça login</h1>
                 <label for="inputUsername" className="sr-only">Nome de usuário</label>
                 <input type="text" 
@@ -53,7 +52,7 @@ export default function SignIn() {
                     onChange={e => setPassword(e.target.value)}
                 />
                 <button className="btn btn-lg btn-primary btn-block mb-3" type="submit">Entrar</button>
-                <Link>Não tem uma conta? Registre-se</Link>
+                <Link to="/signup">Não tem uma conta? Registre-se</Link>
             </form>
         </div>
     );
