@@ -1,0 +1,19 @@
+.menu-container {
+    height: 60px;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-container h1 {
+    margin-left: 1.2rem;
+}
+
+.menu-container nav .link {
+    color: white;
+    margin-right: 1.2rem;
+    font-size: medium;
+}

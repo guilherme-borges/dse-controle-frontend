@@ -1,0 +1,24 @@
+.signin-container {
+    display: flex;
+    justify-content: center;
+}
+.signin-container form {
+    width: 50%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 7em;
+}
+
+label {
+    font-size: 1.2em;
+    font-weight: normal;
+    margin-bottom: 0.5em;
+}
+
+@media (max-width: 425px) {
+  .signin-container form {
+        width: 100%;
+        margin: 1.2em;
+   }
+}
