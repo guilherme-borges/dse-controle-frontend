@@ -35,7 +35,7 @@ export default function SignIn() {
                     value={username}
                     onChange={e => setUsername(e.target.value)}
                 />
-                <input type="text" 
+                <input type="password" 
                     placeholder="Digite a senha"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
