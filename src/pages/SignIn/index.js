@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './styles.css';
 import '../../global.css';
 import api from '../../services/api';
@@ -28,19 +28,32 @@ export default function SignIn() {
     }
 
     return (
+
         <div className="signin-container">
-            <form onSubmit={handleSignIn}>
+            <form className="form-signin" onSubmit={handleSignIn}>
+                <img className="mb-4" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
+                <h1 className="h3 mb-3 font-weight-normal">Por favor faça login</h1>
+                <label for="inputUsername" className="sr-only">Nome de usuário</label>
                 <input type="text" 
-                    placeholder="Digite o nome de usuário"
+                    id="inputUsername" 
+                    className="form-control" 
+                    placeholder="Nome de Usuário" 
+                    required 
+                    autofocus 
                     value={username}
                     onChange={e => setUsername(e.target.value)}
                 />
+                <label for="inputPassword" className="sr-only">Senha</label>
                 <input type="password" 
-                    placeholder="Digite a senha"
+                    id="inputPassword" 
+                    className="form-control" 
+                    placeholder="Senha" 
+                    required 
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                 />
-                <button className="button">Entrar</button>
+                <button className="btn btn-lg btn-primary btn-block mb-3" type="submit">Entrar</button>
+                <Link>Não tem uma conta? Registre-se</Link>
             </form>
         </div>
     );
