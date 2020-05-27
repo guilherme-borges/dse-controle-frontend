@@ -1,0 +1,7 @@
+.users-container {
+    display: flex;
+    flex-direction: column;
+}
+.users-container main {
+    padding: 1.2rem;
+}
