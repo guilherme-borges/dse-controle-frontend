@@ -3,6 +3,7 @@ import api from '../../services/api';
 import './styles.css';
 import Menu from '../../components/Menu';
 import { FiTrash2 } from 'react-icons/fi';
+import { FiEdit3 } from 'react-icons/fi';
 
 export default function UserRegister() {
 
@@ -22,7 +23,7 @@ export default function UserRegister() {
         setUsers(response.data);
     }
 
-    async function handleSignUp(e) {
+    async function saveUser(e) {
         e.preventDefault();
 
         if (!name || !last_name || !email || !username || !password) {
@@ -41,8 +42,15 @@ export default function UserRegister() {
         }
     }
 
-    function deleteUser() {
-        alert('Deletado!!!');
+    async function deleteUser(id) {
+        try {
+            await api.delete(`/users/${id}`);
+            setUsers(users.filter(user => user.id !== id));
+            alert('Usuário deletado com sucesso!');
+        } catch (error) {
+            console.log(error);
+            alert('Erro ao tentar deletar registro');
+        }
     }
 
     return (
@@ -60,13 +68,13 @@ export default function UserRegister() {
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                <h5 className="modal-title" id="staticBackdropLabel">Cadastro de Usuário</h5>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <form onSubmit={handleSignUp}>
+                                <form>
                                     <label htmlFor="inputName" className="sr-only">Nome</label>
                                     <input type="text"
                                         id="inputName"
@@ -117,7 +125,7 @@ export default function UserRegister() {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                <button type="button" className="btn btn-primary" onClick={handleSignUp}>Salvar</button>
+                                <button type="button" className="btn btn-primary" onClick={saveUser}>Salvar</button>
                             </div>
                         </div>
                     </div>
@@ -132,6 +140,7 @@ export default function UserRegister() {
                             <th scope="col">Nome de Usuário</th>
                             <th scope="col">Criado</th>
                             <th scope="col">Editado</th>
+                            <th scope="col">Deletar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,6 +152,7 @@ export default function UserRegister() {
                                 <td>{user.username}</td>
                                 <td>{user.created_at}</td>
                                 <td>{user.updated_at}</td>
+                                <td><button className="btn btn-danger" onClick={() => deleteUser(user.id)}><FiTrash2 /></button></td>
                             </tr>
                         ))}
                     </tbody>

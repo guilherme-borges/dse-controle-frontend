@@ -10,7 +10,7 @@ export default function Dashboard() {
             <Menu />
 
             <main>
-                <table class="table table-hover">
+                <table className="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
