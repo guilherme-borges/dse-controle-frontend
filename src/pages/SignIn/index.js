@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import './styles.css';
 import '../../global.css';
 import api from '../../services/api';
+import { login } from "../../services/auth";
 
 
 export default function SignIn() {
@@ -19,9 +20,11 @@ export default function SignIn() {
             alert('Preencha todos os campos corretamente!');
         } else {
             try {
-                await api.post('sessions', { username, password });
+                const response = await api.post('sessions', { username, password });
+                login(response.data.token);
                 history.push('/dashboard');
             } catch (error) {
+                console.log(error);
                 alert('Erro ao fazer login tente novamente.');
             }
         }
@@ -32,7 +35,7 @@ export default function SignIn() {
         <div className="signin-container">
             <form className="form-signin" onSubmit={handleSignIn}>
                 <h1 className="h3 mb-3 font-weight-normal">Por favor faça login</h1>
-                <label for="inputUsername" className="sr-only">Nome de usuário</label>
+                <label htmlFor="inputUsername" className="sr-only">Nome de usuário</label>
                 <input type="text" 
                     id="inputUsername" 
                     className="form-control" 
@@ -42,7 +45,7 @@ export default function SignIn() {
                     value={username}
                     onChange={e => setUsername(e.target.value)}
                 />
-                <label for="inputPassword" className="sr-only">Senha</label>
+                <label htmlFor="inputPassword" className="sr-only">Senha</label>
                 <input type="password" 
                     id="inputPassword" 
                     className="form-control" 

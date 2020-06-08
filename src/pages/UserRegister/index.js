@@ -16,13 +16,18 @@ export default function UserRegister() {
   const [created_at, setCreatedAt] = useState('');
   const [updated_at, setUpdatedAt] = useState('');
   const [users, setUsers] = useState([]);
+  const token = "Bearer " + localStorage.getItem("Token");
 
   useEffect(() => {
     loadUsers();
   }, []);
 
   async function loadUsers() {
-    const response = await api.get('/users');
+    const response = await api.get('/users', {
+      headers: {
+        Authorization: token
+      }
+    });
     setUsers(response.data);
   }
 
@@ -31,7 +36,11 @@ export default function UserRegister() {
       alert('Preencha todos os campos corretamente!');
     } else {
       try {
-        const response = await api.post('users', { name, last_name, username, email, password });
+        const response = await api.post('users', { name, last_name, username, email, password }, {
+          headers: {
+            Authorization: token
+          }
+        });
         const newUsers = [...users, response.data];
         setUsers(newUsers);
         alert('Usuário cadastrado com sucesso!');
@@ -46,7 +55,11 @@ export default function UserRegister() {
 
   async function updateUser(id) {
     try {
-      await api.put(`users/${id}`, { name, last_name, username, email, password });
+      await api.put(`users/${id}`, { name, last_name, username, email, password }, {
+        headers: {
+          Authorization: token
+        }
+      });
       loadUsers();
       alert('Usuário editado com sucesso!');
     } catch (error) {
@@ -65,7 +78,11 @@ export default function UserRegister() {
 
   async function deleteUser(id) {
     try {
-      await api.delete(`/users/${id}`);
+      await api.delete(`/users/${id}`, {
+        headers: {
+          Authorization: token
+        }
+      });
       setUsers(users.filter(user => user.id !== id));
       alert('Usuário deletado com sucesso!');
     } catch (error) {
