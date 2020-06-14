@@ -1,0 +1,8 @@
+.project-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-container main {
+    padding: 1.2rem;
+}

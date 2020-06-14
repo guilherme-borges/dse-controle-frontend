@@ -6,6 +6,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import DashBoard from './pages/Dashboard';
 import UserRegister from './pages/UserRegister';
+import ProjectRegister from './pages/ProjectRegister';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -27,6 +28,7 @@ const Routes = () => (
             <Route path="/signup" component={SignUp}></Route>
             <PrivateRoute path="/dashboard" component={DashBoard}></PrivateRoute>
             <PrivateRoute path="/users" component={UserRegister}></PrivateRoute>
+            <PrivateRoute path="/projects" component={ProjectRegister}></PrivateRoute>
         </Switch>
     </BrowserRouter>
 );
