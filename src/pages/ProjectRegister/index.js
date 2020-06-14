@@ -72,6 +72,21 @@ export default function ProjectRegister() {
     }
   }
 
+  async function deleteProject(id) {
+    try {
+      await api.delete(`/projects/${id}`, {
+        headers: {
+          Authorization: token
+        }
+      });
+      setProjects(projects.filter(project => project.id !== id));
+      alert('Projeto deletado.');
+    } catch (error) {
+      console.log(error);
+      alert('Erro ao tentar deletar registro.');
+    }
+  }
+
   function clearFields() {
     setId(0);
     setName('');
@@ -145,7 +160,14 @@ export default function ProjectRegister() {
                 <td>{project.name}</td>
                 <td>{project.created_at}</td>
                 <td>{project.updated_at}</td>
-                <td><button className="btn btn-danger"><FiTrash2 /></button></td>
+                <td>
+                  <button type="button"
+                    className="btn btn-danger" 
+                    onClick={() => deleteProject(project.id)}
+                  >
+                    <FiTrash2 />
+                  </button>
+                </td>
                 <td>
                   <button type="button"
                     className="btn btn-success"
