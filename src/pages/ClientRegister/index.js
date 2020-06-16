@@ -59,9 +59,31 @@ export default function ClientRegister() {
     }
   }
 
+  async function updateClient(id) {
+    try {
+      await api.put(`clients/${id}`, {
+        name,
+        cnpj,
+        email,
+        phone
+      }, {
+        headers: {
+          Authorization: token
+        }
+      });
+      loadClients();
+      alert('Cliente editado.');
+    } catch (error) {
+      console.log(error);
+      alert('Erro ao editar cliente. Tente novamente.');
+    }
+  }
+
   function saveClient(id) {
     if (id === 0) {
       addClient();
+    } else {
+      updateClient(id);
     }
   }
 
@@ -73,6 +95,16 @@ export default function ClientRegister() {
     setPhone('');
     setCreatedAt('');
     setUpdatedAt('');
+  }
+
+  function loadFields(client) {
+    setId(client.id);
+    setName(client.name);
+    setCnpj(client.cnpj);
+    setEmail(client.email);
+    setPhone(client.phone);
+    setCreatedAt(client.created_at);
+    setUpdatedAt(client.updated_at);
   }
 
   return (
@@ -182,6 +214,7 @@ export default function ClientRegister() {
                     className="btn btn-success"
                     data-toggle="modal"
                     data-target="#staticBackdrop"
+                    onClick={() => loadFields(client)}
                   >
                     <FiEdit3 />
                   </button>
