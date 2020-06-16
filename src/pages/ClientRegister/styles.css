@@ -1,0 +1,8 @@
+.client-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.client-container main {
+    padding: 1.2rem;
+}
