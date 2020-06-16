@@ -87,6 +87,21 @@ export default function ClientRegister() {
     }
   }
 
+  async function deleteClient(id) {
+    try {
+      await api.delete(`/clients/${id}`, {
+        headers: {
+          Authorization: token
+        }
+      });
+      setClients(clients.filter(client => client.id !== id));
+      alert('Cliente deletado.');
+    } catch (error) {
+      console.log(error);
+      alert('Erro ao tentar deletar registro.');
+    }
+  }
+
   function clearFields() {
     setId(0);
     setName('');
@@ -205,6 +220,7 @@ export default function ClientRegister() {
                 <td>
                   <button type="button"
                     className="btn btn-danger"
+                    onClick={() => deleteClient(client.id)}
                   >
                     <FiTrash2 />
                   </button>
