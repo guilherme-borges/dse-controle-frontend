@@ -23,6 +23,7 @@ export default function Menu() {
               <div className="dropdown-menu" aria-labelledby="dropdown01">
                 <Link className="dropdown-item" to="/users">Usuários</Link>
                 <Link className="dropdown-item" to="/projects">Projetos</Link>
+                <Link className="dropdown-item" to="/clients">Clientes</Link>
               </div>
             </li>
           </ul>
