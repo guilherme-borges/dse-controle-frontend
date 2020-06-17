@@ -8,6 +8,7 @@ import DashBoard from './pages/Dashboard';
 import UserRegister from './pages/UserRegister';
 import ProjectRegister from './pages/ProjectRegister';
 import ClientRegister from './pages/ClientRegister';
+import SaleRegister from './pages/SaleRegister';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -31,6 +32,7 @@ const Routes = () => (
             <PrivateRoute path="/users" component={UserRegister}></PrivateRoute>
             <PrivateRoute path="/projects" component={ProjectRegister}></PrivateRoute>
             <PrivateRoute path="/clients" component={ClientRegister}></PrivateRoute>
+            <PrivateRoute path="/sales" component={SaleRegister}></PrivateRoute>
         </Switch>
     </BrowserRouter>
 );

@@ -24,6 +24,7 @@ export default function Menu() {
                 <Link className="dropdown-item" to="/users">Usuários</Link>
                 <Link className="dropdown-item" to="/projects">Projetos</Link>
                 <Link className="dropdown-item" to="/clients">Clientes</Link>
+                <Link className="dropdown-item" to="/sales">Vendas</Link>
               </div>
             </li>
           </ul>
