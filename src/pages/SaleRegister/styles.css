@@ -1,0 +1,8 @@
+.sale-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.sale-container main {
+    padding: 1.2rem;
+}
