@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
-
 * {
     margin: 0;
     padding: 0;
@@ -12,7 +11,9 @@ body {
     -webkit-font-smoothing: antialiasing;
 }
 
-input, button, textarea {
+input,
+button,
+textarea {
     font: 400 18px Roboto, sans-serif;
 }
 
@@ -27,7 +28,7 @@ form input {
     border: 1px solid #dcdce6;
     border-radius: 8px;
     padding: 0 24px;
-    margin-bottom: 16px; 
+    margin-bottom: 16px;
 }
 
 .button {
@@ -46,6 +47,23 @@ form input {
     line-height: 60px;
     transition: filter 0.2s;
 }
+
+.button-sm {
+    height: 40px;
+    background: #20a3e0;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 500;
+    margin-top: 10px;
+    padding: 5px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    transition: filter 0.2s;
+}
+
 .button:hover {
     filter: brightness(90%);
 }

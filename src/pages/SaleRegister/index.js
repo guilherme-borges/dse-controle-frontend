@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import api from '../../services/api';
-import './styles.css';
-import Menu from '../../components/Menu';
-import { FiTrash2 } from 'react-icons/fi';
-import { FiEdit3 } from 'react-icons/fi';
+import React, { useState, useEffect } from "react";
+import api from "../../services/api";
+import "./styles.css";
+import Menu from "../../components/Menu";
+import { FiTrash2 } from "react-icons/fi";
+import { FiEdit3 } from "react-icons/fi";
 
 const SaleRegister = () => {
-
   const [id, setId] = useState(0);
   const [hours_sold, setHoursSold] = useState(0);
   const [value, setValue] = useState(0);
   const [additional_sales, setAdditionalSales] = useState(null);
   const [client_id, setClientId] = useState(0);
-  const [project_id, setProjectId] = useState(1);
-  const [created_at, setCreatedAt] = useState('');
-  const [updated_at, setUpdatedAt] = useState('');
+  const [project_id, setProjectId] = useState(0);
+  const [created_at, setCreatedAt] = useState("");
+  const [updated_at, setUpdatedAt] = useState("");
   const [sales, setSales] = useState([]);
   const [clients, setClients] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -25,67 +24,78 @@ const SaleRegister = () => {
   }, []);
 
   async function loadSales() {
-    const response = await api.get('/sales', {
+    const response = await api.get("/sales", {
       headers: {
-        Authorization: token
-      }
+        Authorization: token,
+      },
     });
     setSales(response.data);
   }
 
   async function loadClients() {
-    const response = await api.get('/clients', {
+    const response = await api.get("/clients", {
       headers: {
-        Authorization: token
-      }
+        Authorization: token,
+      },
     });
     setClients(response.data);
   }
 
   async function loadProjects() {
-    const response = await api.get('/projects', {
+    const response = await api.get("/projects", {
       headers: {
-        Authorization: token
-      }
+        Authorization: token,
+      },
     });
     setProjects(response.data);
   }
 
   async function addSale() {
-    if (client_id === 0 || project_id === 0 || !hours_sold === 0 || value === 0) {
-      alert('Preencha todos os campos corretamente!');
+    if (
+      client_id === 0 ||
+      project_id === 0 ||
+      !hours_sold === 0 ||
+      value === 0
+    ) {
+      alert("Preencha todos os campos corretamente!");
     } else {
       try {
-        const response = await api.post('sales', { additional_sales, client_id, hours_sold, 
-          project_id, value }, {
-          headers: {
-            Authorization: token
+        const response = await api.post(
+          "sales",
+          { additional_sales, client_id, hours_sold, project_id, value },
+          {
+            headers: {
+              Authorization: token,
+            },
           }
-        });
+        );
         const newSales = [...sales, response.data];
         setSales(newSales);
-        alert('Venda cadastrada.');
+        alert("Venda cadastrada.");
         clearFields();
-
       } catch (error) {
         console.log(error);
-        alert('Erro ao cadastrar venda. Tente novamente.');
+        alert("Erro ao cadastrar venda. Tente novamente.");
       }
     }
   }
 
   async function updateSale(id) {
     try {
-      await api.put(`sales/${id}`, { additional_sales, client_id, hours_sold, project_id, value }, {
-        headers: {
-          Authorization: token
+      await api.put(
+        `sales/${id}`,
+        { additional_sales, client_id, hours_sold, project_id, value },
+        {
+          headers: {
+            Authorization: token,
+          },
         }
-      });
+      );
       loadSales();
-      alert('Venda editada.');
+      alert("Venda editada.");
     } catch (error) {
       console.log(error);
-      alert('Erro ao editar venda. Tente novamente.');
+      alert("Erro ao editar venda. Tente novamente.");
     }
   }
 
@@ -101,14 +111,14 @@ const SaleRegister = () => {
     try {
       await api.delete(`/sales/${id}`, {
         headers: {
-          Authorization: token
-        }
+          Authorization: token,
+        },
       });
-      setSales(sales.filter(sale => sale.id !== id));
-      alert('Venda excluída.');
+      setSales(sales.filter((sale) => sale.id !== id));
+      alert("Venda excluída.");
     } catch (error) {
       console.log(error);
-      alert('Erro ao tentar excluir registro.');
+      alert("Erro ao tentar excluir registro.");
     }
   }
 
@@ -120,24 +130,23 @@ const SaleRegister = () => {
     setAdditionalSales(null);
     setClientId(0);
     setProjectId(0);
-    setCreatedAt('');
-    setUpdatedAt('');
+    setCreatedAt("");
+    setUpdatedAt("");
   }
 
   function loadFields(sale) {
     loadClients();
     loadProjects();
-    
+
     setId(sale.id);
     setHoursSold(sale.hours_sold);
     setAdditionalSales(null);
     setValue(sale.value);
     setCreatedAt(sale.created_at);
     setUpdatedAt(sale.updated_at);
-    
+
     setProjectId(sale.project_id);
     setClientId(sale.client_id);
-    
   }
 
   return (
@@ -146,73 +155,109 @@ const SaleRegister = () => {
 
       <main>
         <div className="d-flex flex-row-reverse">
-          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"  onClick={() => clearFields()}>
+          <button
+            type="button"
+            className="btn btn-primary"
+            data-toggle="modal"
+            data-target="#staticBackdrop"
+            onClick={() => clearFields()}
+          >
             Novo
           </button>
         </div>
 
-        <div className="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabIndex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div
+          className="modal fade"
+          id="staticBackdrop"
+          data-backdrop="static"
+          data-keyboard="false"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="staticBackdropLabel">Cadastro de Projetos</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <h5 className="modal-title" id="staticBackdropLabel">
+                  Cadastro de Projetos
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
                 <form>
-                    <label htmlFor="selectClient">Cliente</label>
-                    <select className="custom-select mb-3" id="selectClient"
-                      onChange={e => setClientId(e.target.value)}
-                      value={client_id}
-                    >
-                      <option>Selecione o cliente</option>
-                      {clients.map(clients => (
-                        <option key={clients.id} 
-                          value={clients.id}
-                        >
-                          {clients.name}
-                        </option>
-                      ))}
-                    </select>
-                      <label htmlFor="selectProject">Projeto</label>
-                    <select className="custom-select mb-3" id="selectProject" 
-                      onChange={e => setProjectId(e.target.value)}
-                      value={project_id}
-                    >
-                      <option>Selecione o projeto</option>
-                      {projects.map(project => (
-                        <option key={project.id} 
-                          value={project.id} 
-                        >
-                          {project.name}
-                        </option>
-                      ))}
-                    </select>
+                  <label htmlFor="selectClient">Cliente</label>
+                  <select
+                    className="custom-select mb-3"
+                    id="selectClient"
+                    onChange={(e) => setClientId(e.target.value)}
+                    value={client_id}
+                  >
+                    <option>Selecione o cliente</option>
+                    {clients.map((clients) => (
+                      <option key={clients.id} value={clients.id}>
+                        {clients.name}
+                      </option>
+                    ))}
+                  </select>
+                  <label htmlFor="selectProject">Projeto</label>
+                  <select
+                    className="custom-select mb-3"
+                    id="selectProject"
+                    onChange={(e) => setProjectId(e.target.value)}
+                    value={project_id}
+                  >
+                    <option>Selecione o projeto</option>
+                    {projects.map((project) => (
+                      <option key={project.id} value={project.id}>
+                        {project.name}
+                      </option>
+                    ))}
+                  </select>
                   <label htmlFor="inputHoursSold">Horas vendidas</label>
-                  <input type="number"
+                  <input
+                    type="number"
                     id="inputHoursSold"
                     className="form-control"
                     placeholder="Horas vendidas"
                     required
                     value={hours_sold}
-                    onChange={e => setHoursSold(e.target.value)}
+                    onChange={(e) => setHoursSold(e.target.value)}
                   />
-                  <label htmlFor="inputValue" >Valor Vendido</label>
-                  <input type="number"
+                  <label htmlFor="inputValue">Valor Vendido</label>
+                  <input
+                    type="number"
                     id="inputValue"
                     className="form-control"
                     placeholder="Valor Vendido"
                     required
                     value={value}
-                    onChange={e => setValue(e.target.value)}
+                    onChange={(e) => setValue(e.target.value)}
                   />
                 </form>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" className="btn btn-primary" onClick={() => saveSale(id)}>Salvar</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Fechar
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => saveSale(id)}
+                >
+                  Salvar
+                </button>
               </div>
             </div>
           </div>
@@ -233,7 +278,7 @@ const SaleRegister = () => {
             </tr>
           </thead>
           <tbody>
-            {sales.map(sale => (
+            {sales.map((sale) => (
               <tr key={sale.id}>
                 <th scope="row">{sale.id}</th>
                 <td>{sale.client}</td>
@@ -243,7 +288,8 @@ const SaleRegister = () => {
                 <td>{sale.created_at}</td>
                 <td>{sale.updated_at}</td>
                 <td>
-                  <button type="button"
+                  <button
+                    type="button"
                     className="btn btn-danger"
                     onClick={() => deleteSale(sale.id)}
                   >
@@ -251,7 +297,8 @@ const SaleRegister = () => {
                   </button>
                 </td>
                 <td>
-                  <button type="button"
+                  <button
+                    type="button"
                     className="btn btn-success"
                     data-toggle="modal"
                     data-target="#staticBackdrop"
@@ -267,6 +314,6 @@ const SaleRegister = () => {
       </main>
     </div>
   );
-}
+};
 
 export default SaleRegister;
