@@ -12,7 +12,7 @@ const SaleRegister = () => {
   const [value, setValue] = useState(0);
   const [additional_sales, setAdditionalSales] = useState(null);
   const [client_id, setClientId] = useState(0);
-  const [project_id, setProjectId] = useState(0);
+  const [project_id, setProjectId] = useState(1);
   const [created_at, setCreatedAt] = useState('');
   const [updated_at, setUpdatedAt] = useState('');
   const [sales, setSales] = useState([]);
@@ -56,7 +56,8 @@ const SaleRegister = () => {
       alert('Preencha todos os campos corretamente!');
     } else {
       try {
-        const response = await api.post('sales', { additional_sales, client_id, hours_sold, project_id, value }, {
+        const response = await api.post('sales', { additional_sales, client_id, hours_sold, 
+          project_id, value }, {
           headers: {
             Authorization: token
           }
@@ -73,9 +74,26 @@ const SaleRegister = () => {
     }
   }
 
+  async function updateSale(id) {
+    try {
+      await api.put(`sales/${id}`, { additional_sales, client_id, hours_sold, project_id, value }, {
+        headers: {
+          Authorization: token
+        }
+      });
+      loadSales();
+      alert('Venda editada.');
+    } catch (error) {
+      console.log(error);
+      alert('Erro ao editar venda. Tente novamente.');
+    }
+  }
+
   function saveSale(id) {
     if (id === 0) {
       addSale();
+    } else {
+      updateSale(id);
     }
   }
 
@@ -89,6 +107,22 @@ const SaleRegister = () => {
     setProjectId(0);
     setCreatedAt('');
     setUpdatedAt('');
+  }
+
+  function loadFields(sale) {
+    //loadClients();
+    //loadProjects();
+    
+    setId(sale.id);
+    setHoursSold(sale.hours_sold);
+    setAdditionalSales(null);
+    setValue(sale.value);
+    setCreatedAt(sale.created_at);
+    setUpdatedAt(sale.updated_at);
+    
+    setProjectId(sale.project_id);
+    setClientId(sale.client_id);
+    
   }
 
   return (
@@ -114,10 +148,10 @@ const SaleRegister = () => {
               <div className="modal-body">
                 <form>
                     <label htmlFor="selectClient">Cliente</label>
-                    <select class="custom-select mb-3" id="selectClient"
+                    <select className="custom-select mb-3" id="selectClient"
                       onChange={e => setClientId(e.target.value)}
                     >
-                      <option selected>Selecione o cliente</option>
+                      <option>Selecione o cliente</option>
                       {clients.map(clients => (
                         <option key={clients.id} 
                           value={clients.id}
@@ -126,11 +160,11 @@ const SaleRegister = () => {
                         </option>
                       ))}
                     </select>
-                      <label htmlFor="selectProject">Projeto {project_id}</label>
-                    <select class="custom-select mb-3" id="selectProject" 
+                      <label htmlFor="selectProject">Projeto</label>
+                    <select className="custom-select mb-3" id="selectProject" 
                       onChange={e => setProjectId(e.target.value)}
                     >
-                      <option selected>Selecione o projeto</option>
+                      <option>Selecione o projeto</option>
                       {projects.map(project => (
                         <option key={project.id} 
                           value={project.id} 
@@ -203,6 +237,7 @@ const SaleRegister = () => {
                     className="btn btn-success"
                     data-toggle="modal"
                     data-target="#staticBackdrop"
+                    onClick={() => loadFields(sale)}
                   >
                     <FiEdit3 />
                   </button>
