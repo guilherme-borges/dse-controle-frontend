@@ -125,8 +125,8 @@ const SaleRegister = () => {
   }
 
   function loadFields(sale) {
-    //loadClients();
-    //loadProjects();
+    loadClients();
+    loadProjects();
     
     setId(sale.id);
     setHoursSold(sale.hours_sold);
@@ -165,6 +165,7 @@ const SaleRegister = () => {
                     <label htmlFor="selectClient">Cliente</label>
                     <select className="custom-select mb-3" id="selectClient"
                       onChange={e => setClientId(e.target.value)}
+                      value={client_id}
                     >
                       <option>Selecione o cliente</option>
                       {clients.map(clients => (
@@ -178,6 +179,7 @@ const SaleRegister = () => {
                       <label htmlFor="selectProject">Projeto</label>
                     <select className="custom-select mb-3" id="selectProject" 
                       onChange={e => setProjectId(e.target.value)}
+                      value={project_id}
                     >
                       <option>Selecione o projeto</option>
                       {projects.map(project => (
