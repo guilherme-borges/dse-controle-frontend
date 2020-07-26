@@ -97,6 +97,21 @@ const SaleRegister = () => {
     }
   }
 
+  async function deleteSale(id) {
+    try {
+      await api.delete(`/sales/${id}`, {
+        headers: {
+          Authorization: token
+        }
+      });
+      setSales(sales.filter(sale => sale.id !== id));
+      alert('Venda excluída.');
+    } catch (error) {
+      console.log(error);
+      alert('Erro ao tentar excluir registro.');
+    }
+  }
+
   function clearFields() {
     loadClients();
     loadProjects();
@@ -228,6 +243,7 @@ const SaleRegister = () => {
                 <td>
                   <button type="button"
                     className="btn btn-danger"
+                    onClick={() => deleteSale(sale.id)}
                   >
                     <FiTrash2 />
                   </button>
